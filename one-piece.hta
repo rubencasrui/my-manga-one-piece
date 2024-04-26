@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="x-ua-compatible" content="ie=9">
+	<title>One Piece</title>
+	<hta:application
+		id="one-piece"
+		applicationname="One Piece"
+		icon="one-piece.ico"
+		borderstyle="normal"
+		caption="yes"
+		contextmenu="yes"
+		innerborder="no"
+		navigable="yes"
+		scroll="auto"
+		scrollflat="no"
+		selection="yes"
+		showintaskbar="yes"
+		singleinstance="yes"
+		sysmenu="yes"
+		version="1.0"
+		windowstate="normal"
+		windowstate="normal"
+		application="yes"
+	/>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+	<style>
+		body {
+			background-color: #333;
+			color: white;
+		}
+
+		.subir {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+		}
+		
+		#imagenes {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+	</style>
+
+</head>
+<body>
+	
+	<div class="text-center">
+		<h1>One Piece</h1>
+		<img src="one-piece.ico" alt="One Piece" class="img-fluid">
+		<h2>Capitulo Actual</h2>
+		<p id="capituloActual" class="display-4"></p>
+	</div>
+	
+	<div class="text-center">
+		<button class="btn btn-primary" onclick="disminuirCapitulo(); cargarImagenes()">Anterior</button>
+		<span> </span>
+		<button class="btn btn-danger" onclick="cerrarVentana()">Cerrar</button>
+		<span> </span>
+		<button class="btn btn-primary" onclick="aumentarCapitulo(); cargarImagenes()">Siguiente</button>
+	</div>
+
+	<div id="imagenes" class="text-center"></div>
+
+	<div class="subir">
+		<a href="#one-piece" class="btn btn-primary">
+			<i class="fas fa-arrow-up"></i>
+		</a>
+	</div>
+
+	<script language="VBScript">
+		// centrar la ventana
+		Sub Window_Onload
+		  self.ResizeTo 700, 700
+		  self.MoveTo (screen.availWidth/2 - document.body.clientWidth/2), 0
+		End Sub
+
+		// obtener el numero del archivo cap.txt
+		Dim fso, archivo, numeroCapitulo
+		Set fso = CreateObject("Scripting.FileSystemObject")
+		Set archivo = fso.OpenTextFile("cap.txt", 1)
+		numeroCapitulo = archivo.ReadLine
+		archivo.Close
+		document.getElementById("capituloActual").innerText = numeroCapitulo
+
+		// funcion que obtiene el numero del archivo cap.txt y le aumenta 1
+		Sub aumentarCapitulo
+			Dim fso, archivo, numeroCapitulo
+
+			Set fso = CreateObject("Scripting.FileSystemObject")
+			Set archivo = fso.OpenTextFile("cap.txt", 1)
+			numeroCapitulo = archivo.ReadLine
+			archivo.Close
+			
+			numeroCapitulo = numeroCapitulo + 1
+			Set archivo = fso.OpenTextFile("cap.txt", 2)
+			archivo.WriteLine numeroCapitulo
+			archivo.Close
+			
+			document.getElementById("capituloActual").innerText = numeroCapitulo
+		End Sub
+
+		// funcion que obtiene el numero del archivo cap.txt y le disminuye 1
+		Sub disminuirCapitulo
+			Dim fso, archivo, numeroCapitulo
+
+			Set fso = CreateObject("Scripting.FileSystemObject")
+			Set archivo = fso.OpenTextFile("cap.txt", 1)
+			numeroCapitulo = archivo.ReadLine
+			archivo.Close
+			
+			numeroCapitulo = numeroCapitulo - 1
+			Set archivo = fso.OpenTextFile("cap.txt", 2)
+			archivo.WriteLine numeroCapitulo
+			archivo.Close
+			
+			document.getElementById("capituloActual").innerText = numeroCapitulo
+		End Sub
+
+		// cerrar la ventana
+		Sub cerrarVentana
+			window.close
+		End Sub
+
+	</script>
+
+	<script>
+		// Función para cargar las imágenes del div con el id 'chapter_imgs' de la página https://dragontranslation.net/leer/one-piece-(capitulo).00
+		function cargarImagenes() {
+			// puntero cargando
+			document.body.style.cursor = "wait";
+
+			// Obtener el capítulo actual
+			capitulo = document.getElementById("capituloActual").innerText;
+
+			// Crear una petición XMLHttpRequest
+			url = "https://dragontranslation.net/leer/one-piece-" + capitulo + ".00";
+			xhr = new XMLHttpRequest();
+			xhr.open("GET", url, true);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					// Crear un elemento div para almacenar las imágenes
+					div = document.createElement("div");
+					div.innerHTML = xhr.responseText;
+
+					// Obtener todas las imágenes de la página
+					imgs = div.getElementsByTagName("img");
+					
+					// Crear un div para almacenar las imágenes
+					div = document.createElement("div");
+					
+					// Recorrer todas las imágenes
+					for (i = 1; i < imgs.length; i++) {
+						// Crear un elemento img
+						img = document.createElement("img");
+					
+						// Asignar la URL de la imagen
+						img.src = imgs[i].src;
+						img.style.maxWidth = "700px";
+						img.style.marginTop = "5px";
+						img.style.border = "5px solid black";
+						img.style.borderRadius = "5px";
+
+						imagen = document.createElement("div");
+
+						imagen.appendChild(img);
+
+						// Agregar la imagen al div
+						div.appendChild(imagen);
+					}
+					
+					// Agregar el div con las imágenes al div con el id 'imagenes'
+					document.getElementById("imagenes").innerHTML = div.innerHTML;
+					
+					// puntero normal
+					document.body.style.cursor = "default";
+				}
+			};
+			xhr.send();
+		}
+		cargarImagenes();
+
+	</script>
+</body>
+</html>

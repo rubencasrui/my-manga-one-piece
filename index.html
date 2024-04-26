@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>One Piece</title>
+	<link rel="icon" href="https://www.iconarchive.com/download/i54293/crountch/one-piece-jolly-roger/Luffys-flag.ico" type="image/x-icon">
+
+		
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="style.css">
+
+	<script type="module">
+		// Import the functions you need from the SDKs you need
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+		import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
+		// TODO: Add SDKs for Firebase products that you want to use
+		// https://firebase.google.com/docs/web/setup#available-libraries
+
+		// Your web app's Firebase configuration
+		// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+		const firebaseConfig = {
+			apiKey: "AIzaSyA6zX-yttjrl20G9WTlKM6D_FtM7yvbkHI",
+			authDomain: "my-manga-one-piece.firebaseapp.com",
+			projectId: "my-manga-one-piece",
+			storageBucket: "my-manga-one-piece.appspot.com",
+			messagingSenderId: "259662634675",
+			appId: "1:259662634675:web:14cc683a77006d226b1ac6",
+			measurementId: "G-TVB3C3RHCN"
+		};
+
+		// Initialize Firebase
+		const app = initializeApp(firebaseConfig);
+		const analytics = getAnalytics(app);
+	</script>
+
+</head>
+
+<body>
+
+	<div class="text-center">
+		<h1 id="one-piece">One Piece</h1>
+		<img src="https://www.iconarchive.com/download/i54293/crountch/one-piece-jolly-roger/Luffys-flag.ico"
+			alt="One Piece" class="img-fluid">
+		<h2>Capitulo Actual</h2>
+		<p id="capituloActual" class="display-4"></p>
+	</div>
+
+	<div class="text-center">
+		<button class="btn btn-primary" onclick="disminuirCapitulo(); cargarImagenes()">Anterior</button>
+		<button class="btn btn-danger ml-1 mr-1" onclick="cerrarVentana()">Cerrar</button>
+		<button class="btn btn-primary" onclick="aumentarCapitulo(); cargarImagenes()">Siguiente</button>
+	</div>
+
+	<div class="busqueda mt-1">
+		<div class="col-md-3">
+			<div class="input-group">
+				<input type="number" id="capitulo" class="form-control" placeholder="capitulo" required>
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-primary" onclick="irAlCapitulo()">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="imagenes" class="text-center"></div>
+
+	<div class="text-center mt-1">
+		<button class="btn btn-primary" onclick="disminuirCapitulo(); cargarImagenes()">Anterior</button>
+		<button class="btn btn-danger ml-1 mr-1" onclick="cerrarVentana()">Cerrar</button>
+		<button class="btn btn-primary" onclick="aumentarCapitulo(); cargarImagenes()">Siguiente</button>
+	</div>
+
+	<div class="subir">
+		<a href="#one-piece" class="btn btn-primary">
+			<i class="fas fa-arrow-up"></i>
+		</a>
+	</div>
+
+	<script src="index.js"></script>
+</body>
+
+</html>
